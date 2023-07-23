@@ -1,41 +1,41 @@
-from flask import url_for, redirect, session
-from flask_oauthlib.client import OAuth
 from config import Config
+from extensions import oauth
 
-oauth = OAuth()
 
-google = oauth.remote_app(
-    'google',
-    consumer_key=Config.GOOGLE_CLIENT_ID,
-    consumer_secret=Config.GOOGLE_CLIENT_SECRET,
-    request_token_params={'scope':'email'},
-    base_url='https://www.googleapis.com/oauth2/v1/',
-    request_token_url=None,
-    access_token_method='POST',
+google = oauth.register(
+    name='google',
+    client_id=Config.GOOGLE_CLIENT_ID,
+    client_secret=Config.GOOGLE_CLIENT_SECRET,
+    authorize_url='https://accounts.google.com/o/oauth2/auth',
+    authorize_params=None,
     access_token_url='https://accounts.google.com/o/oauth2/token',
-    authorize_url='https://accounts.google.com/o/oauth2/auth'
+    access_token_params=None,
+    redirect_uri=Config.GOOGLE_REDIRECT_URI,
+    client_kwargs={'scope': 'openid profile email'},
 )
 
-facebook = oauth.remote_app(
-    'facebook',
-    consumer_key=Config.FACEBOOK_CLIENT_ID,
-    consumer_secret=Config.FACEBOOK_CLIENT_SECRET,
-    request_token_params={'scope':'email'},
-    base_url='https://graph.facebook.com/v2.8/',
-    request_token_url=None,
-    access_token_method='POST',
-    access_token_url='/oauth/access_token',
-    authorize_url='https://www.facebook.com/dialog/oauth'
+
+facebook = oauth.register(
+    name='facebook',
+    client_id=Config.FACEBOOK_CLIENT_ID,
+    client_secret=Config.FACEBOOK_CLIENT_SECRET,
+    authorize_url='https://www.facebook.com/dialog/oauth',
+    authorize_params=None,
+    access_token_url='https://graph.facebook.com/oauth/access_token',
+    access_token_params=None,
+    redirect_uri=Config.FACEBOOK_REDIRECT_URI,
+    client_kwargs={'scope': 'email'},
 )
 
-github = oauth.remote_app(
-    'github',
-    consumer_key=Config.GITHUB_CLIENT_ID,
-    consumer_secret=Config.GITHUB_CLIENT_SECRET,
-    request_token_params={'scope':'email'},
-    base_url='https://api.github.com/',
-    request_token_url=None,
-    access_token_method='POST',
+
+github = oauth.register(
+    name='github',
+    client_id=Config.GITHUB_CLIENT_ID,
+    client_secret=Config.GITHUB_CLIENT_SECRET,
+    authorize_url='https://github.com/login/oauth/authorize',
+    authorize_params=None,
     access_token_url='https://github.com/login/oauth/access_token',
-    authorize_url='https://github.com/login/oauth/authorize'
+    access_token_params=None,
+    redirect_uri=Config.GITHUB_REDIRECT_URI,
+    client_kwargs={'scope': 'user:email'},
 )

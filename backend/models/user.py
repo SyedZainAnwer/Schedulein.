@@ -8,5 +8,6 @@ class User(db.Model):
     password_hash = db.Column(db.String(128), nullable=True)
     social_id = db.Column(db.String(128), nullable=True)
     social_provider = db.Column(db.String(50), nullable=True)
+    photo_url = db.Column(db.String(256), nullable=True)
     tasks = relationship('Task', backref='owner', lazy=True)
     invitations = relationship('Invitation', backref='inviter', lazy=True)

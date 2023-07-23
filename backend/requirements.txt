@@ -3,5 +3,6 @@ Flask-Cors
 psycopg2-binary
 Flask-SQLAlchemy
 Flask-Migrate
-Flask-OAuthlib
+Authlib
 Flask-Bcrypt
+pillow
