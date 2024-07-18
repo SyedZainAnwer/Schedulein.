@@ -1,2 +1,5 @@
-flask
-psycopg2-binary==2.8.6
+Flask
+Flask-Cors
+psycopg2-binary
+Flask-SQLAlchemy
+Flask-Migrate

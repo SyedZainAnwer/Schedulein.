@@ -1,2 +1,6 @@
 .env
 .env*.local
+venv/
+README.md
+backend/migrations/
+backend/__pycache__/
