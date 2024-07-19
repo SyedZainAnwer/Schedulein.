@@ -1,12 +1,11 @@
-import LoginForm from "@/components/LoginForm";
+import RegisterForm from "@/components/RegisterForm";
 
 const page = () => {
     return(
         <div>
-            <LoginForm />
+                <RegisterForm />
         </div>
     )
-};
-
+}
 
 export default page;

@@ -9,27 +9,14 @@ import googleIcon from '@/assets/google.svg';
 import facebookIcon from '@/assets/facebook.svg';
 import appleIcon from '@/assets/apple.svg';
 import Image from "next/image";
-import { z } from "zod";
-import { LoginValidation } from "@/validations/UserValidation";
-import { zodResolver } from "@hookform/resolvers/zod";
 
-const LoginForm = () => {
+const RegisterForm = () => {
 
-    const form = useForm<z.infer<typeof LoginValidation>>({
-        resolver: zodResolver(LoginValidation),
-        defaultValues: {
-            email: "",
-            password: ""
-        }
-    });
+    const form = useForm();
 
-    const onSubmit = () => {
-        
-    }
-
-    return (
+    return(
         <div className="flex flex-col justify-center h-screen items-center w-full">
-            <p className="text-xl mb-2 font-semibold">Sign In</p>
+            <p className="text-xl mb-2 font-semibold">Sign Up</p>
             <div className="border p-10 rounded-md">
                 <div className="flex justify-evenly w-full">
                     <Button variant="ghost" size="forIcon" >
@@ -48,9 +35,21 @@ const LoginForm = () => {
                 <Form {...form}>
                     <FormField
                         control={form.control}
-                        name="email"
+                        name="username"
                         render={({ field }) => (
                             <FormItem>
+                                <FormLabel>Username</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="username" {...field} className="p-5 pr-16" />
+                                </FormControl>
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="username"
+                        render={({ field }) => (
+                            <FormItem className="my-3">
                                 <FormLabel>Email</FormLabel>
                                 <FormControl>
                                     <Input placeholder="email" {...field} className="p-5 pr-16" />
@@ -60,9 +59,9 @@ const LoginForm = () => {
                     />
                     <FormField
                         control={form.control}
-                        name="password"
+                        name="username"
                         render={({ field }) => (
-                            <FormItem className="mt-3">
+                            <FormItem>
                                 <FormLabel>Password</FormLabel>
                                 <FormControl>
                                     <Input placeholder="password" {...field} className="p-5 pr-10" type="password" />
@@ -71,19 +70,13 @@ const LoginForm = () => {
                         )}
                     />
 
-                    <p className="text-xs flex justify-end mt-1 text-blue-500 cursor-pointer">Forgot Password</p>
-
                     <div className="w-full">
-                        <Button className="mt-5 px-10 w-full text-black" variant="outline" size="lg">Login</Button>
+                        <Button className="mt-5 px-10 w-full text-black" variant="outline" size="lg">Register</Button>
                     </div>
                 </Form>
-                <p className="text-xs mt-5">Dont have an account? {" "}
-                    <span className="text-blue-500 cursor-pointer">Register</span>
-                </p>
             </div>
         </div>
-    );
-};
+    )
+}
 
-
-export default LoginForm;
+export default RegisterForm;
