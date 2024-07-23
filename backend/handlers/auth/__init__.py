@@ -1,9 +1,11 @@
 from .login_user import login_user_through_email_password, social_login, social_callback
 from .register_user import register_user
+from .delete_user import delete_user
 
 __all__ = [
     'login_user_through_email_password',
     'social_login',
     'social_callback',
-    'register_user'
+    'register_user',
+    'delete_user'
 ]

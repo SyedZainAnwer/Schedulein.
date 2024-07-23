@@ -1,32 +1,39 @@
-from flask import jsonify, request
+from flask import jsonify, request, session
 from models.user import User
 from extensions import bcrypt, db
 
 def register_user():
-    username = request.form.get("username")
-    email = request.form.get("email")
-    password = request.form.get("password")
+    # Retrieve form data
+    data = request.get_json()
+    username = data.get("username")
+    email = data.get("email")
+    password = data.get("password")
     
-    # check for an existing user through email
+    # Check for an existing user with the same email
     user_exist = User.query.filter_by(email=email).first()
     
     if user_exist:
-        return jsonify({"message":"User already exist"}), 400
+        return jsonify({"message": "User already exists"}), 400
+
+    if not username or not email or not password:
+        return jsonify({"message": "Missing required fields"}), 400
+
+    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
     
-    hash_password = bcrypt.generate_password_hash(password)
+    # Create a new user
+    new_user = User(username=username, email=email, password=hashed_password)
+    db.session.add(new_user)
+    session['user_id'] = new_user.id
     
-    user = User(
-        username=username, 
-        email=email, 
-        password=hash_password,
-        profile_picture=None
-    )
-    
-    # add the user to the db
-    db.session.add(user)
-    db.session.commit()
-    
-    return jsonify({"success": "User registered successfully!"}), 201
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"message": "An error occurred while creating the user."}), 500
+
+    # Optionally, you can log the user in or return a success response
+    return jsonify({"message": "User registered successfully!"}), 201
+
 
 
 def register_social_user(user_info, provider):
