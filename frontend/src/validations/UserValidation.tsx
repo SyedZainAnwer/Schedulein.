@@ -5,7 +5,8 @@ export const RegisterationValidation = z.object({
     email: z.string().email().optional(),
     password: z.string().min(8).max(128).optional(),
     socialId: z.string().optional(),
-    socialProvider: z.enum(["google", "facebook", "apple"]).optional()
+    socialProvider: z.enum(["google", "facebook", "apple"]).optional(),
+    photo_url: z.string().url().optional()
 }).refine((data) => {
     return (data.email && data.password && data.username) || (data.socialId && data.socialProvider);
 }, {

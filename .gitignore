@@ -5,3 +5,6 @@ README.md
 backend/migrations/
 backend/__pycache__/
 backend/models/__pycache__/
+backend/handlers/__pycache__/
+backend/utils/__pycache__/
+backend/handlers/auth/__pycache__/

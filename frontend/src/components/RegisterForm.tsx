@@ -5,10 +5,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
-import googleIcon from '@/assets/google.svg';
-import facebookIcon from '@/assets/facebook.svg';
-import appleIcon from '@/assets/apple.svg';
-import Image from "next/image";
+import SocialIcons from "./SocialIcons";
 
 const RegisterForm = () => {
 
@@ -18,17 +15,7 @@ const RegisterForm = () => {
         <div className="flex flex-col justify-center h-screen items-center w-full">
             <p className="text-xl mb-2 font-semibold">Sign Up</p>
             <div className="border p-10 rounded-md">
-                <div className="flex justify-evenly w-full">
-                    <Button variant="ghost" size="forIcon" >
-                        <Image src={googleIcon} alt="google icon" height={30} width={30} />
-                    </Button>
-                    <Button variant="ghost" size="forIcon">
-                        <Image src={facebookIcon} alt="google icon" height={35} width={35} />
-                    </Button>
-                    <Button variant="ghost" size="forIcon">
-                        <Image src={appleIcon} alt="google icon" height={40} width={40} />
-                    </Button>
-                </div>
+                <SocialIcons />
 
                 <Separator className="my-5" />
 
