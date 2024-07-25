@@ -9,8 +9,13 @@ import { z } from "zod";
 import { LoginValidation } from "@/validations/UserValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import SocialIcons from "./SocialIcons";
+import request from '@/utils/api';
+import { endPoints } from "@/utils/endPoints";
+import { redirect, useRouter } from "next/navigation";
 
 const LoginForm = () => {
+
+    const router = useRouter();
 
     const form = useForm<z.infer<typeof LoginValidation>>({
         resolver: zodResolver(LoginValidation),
@@ -20,8 +25,14 @@ const LoginForm = () => {
         }
     });
 
-    const onSubmit = () => {
-        
+    const onSubmit = async(values: z.infer<typeof LoginValidation>) => {
+        try {
+            const response = await request.post(`${endPoints.login}`, values);
+            console.log("User Logged In!", response.data);
+            router.push("/");
+        } catch(error: any) {
+            console.error("Failed during logging in!", error);
+        }
     }
 
     return (
@@ -33,36 +44,45 @@ const LoginForm = () => {
                 <Separator className="my-5" />
 
                 <Form {...form}>
-                    <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Email</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="email" {...field} className="p-5 pr-16" />
-                                </FormControl>
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="password"
-                        render={({ field }) => (
-                            <FormItem className="mt-3">
-                                <FormLabel>Password</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="password" {...field} className="p-5 pr-10" type="password" />
-                                </FormControl>
-                            </FormItem>
-                        )}
-                    />
+                    <form onSubmit={form.handleSubmit(onSubmit)}>
+                        <FormField
+                            control={form.control}
+                            name="email"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Email</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="email" {...field} className="p-5 pr-16" />
+                                    </FormControl>
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="password"
+                            render={({ field }) => (
+                                <FormItem className="mt-3">
+                                    <FormLabel>Password</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="password" {...field} className="p-5 pr-10" type="password" />
+                                    </FormControl>
+                                </FormItem>
+                            )}
+                        />
 
-                    <p className="text-xs flex justify-end mt-1 text-blue-500 cursor-pointer">Forgot Password</p>
+                        <p className="text-xs flex justify-end mt-1 text-blue-500 cursor-pointer">Forgot Password</p>
 
-                    <div className="w-full">
-                        <Button className="mt-5 px-10 w-full text-black" variant="outline" size="lg">Login</Button>
-                    </div>
+                        <div className="w-full">
+                            <Button 
+                                className="mt-5 px-10 w-full text-black" 
+                                variant="outline" 
+                                size="lg" 
+                                type="submit"
+                            >
+                                Login
+                            </Button>
+                        </div>
+                    </form>
                 </Form>
                 <p className="text-xs mt-5">Dont have an account? {" "}
                     <span className="text-blue-500 cursor-pointer">Register</span>
