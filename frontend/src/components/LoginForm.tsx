@@ -29,7 +29,7 @@ const LoginForm = () => {
         try {
             const response = await request.post(`${endPoints.login}`, values);
             console.log("User Logged In!", response.data);
-            router.push("/");
+            router.push("/home");
         } catch(error: any) {
             console.error("Failed during logging in!", error);
         }
