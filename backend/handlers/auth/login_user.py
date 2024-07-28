@@ -3,13 +3,12 @@ from utils.oauth import google, facebook, github
 from .register_user import register_social_user
 from models.user import User
 from flask_bcrypt import check_password_hash
+from utils.create_token import create_token
 
 def login_user_through_email_password():
     data = request.get_json()
     email = data.get("email")
     password = data.get("password")
-    
-    print(f"User: {email}, Password: {password}")
     
     user = User.query.filter_by(email=email).first()
     
@@ -17,11 +16,17 @@ def login_user_through_email_password():
         return jsonify({"error": "User does not exist!"}), 404
     
     if user and check_password_hash(user.password, password):
-        session['user_id'] = user.id
-        return jsonify({"success": "Login successful!"}), 200
+        token = create_token(user.id)
+        return jsonify({
+            "success": "Login successful!", 
+            "token": token, 
+            "user": {
+                "id": user.id,
+                "avatar_url": user.photo_url
+            }
+        }), 200
     else:
         return jsonify({"error": "Please enter correct credentials!"}), 401
-    
 
 
 def social_login(provider):

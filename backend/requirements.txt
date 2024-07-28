@@ -6,3 +6,4 @@ Flask-Migrate
 Authlib
 Flask-Bcrypt
 pillow
+PyJWT

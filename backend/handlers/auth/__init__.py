@@ -7,5 +7,5 @@ __all__ = [
     'social_login',
     'social_callback',
     'register_user',
-    'delete_user'
+    'delete_user',
 ]
