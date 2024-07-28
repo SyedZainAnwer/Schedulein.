@@ -11,7 +11,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import SocialIcons from "./SocialIcons";
 import request from '@/utils/api';
 import { endPoints } from "@/utils/endPoints";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { ILogin } from "@/types/AuthResponse";
+import Cookies from 'js-cookie'
 
 const LoginForm = () => {
 
@@ -27,8 +29,13 @@ const LoginForm = () => {
 
     const onSubmit = async(values: z.infer<typeof LoginValidation>) => {
         try {
-            const response = await request.post(`${endPoints.login}`, values);
-            console.log("User Logged In!", response.data);
+            const { data }: { data: ILogin } = await request.post(`${endPoints.login}`, values);
+            console.log(String(data.user.id))
+
+            if (data.token) {
+                Cookies.set('authToken', data.token),
+                Cookies.set('authUserId', String(data.user.id))
+            }
             router.push("/home");
         } catch(error: any) {
             console.error("Failed during logging in!", error);
