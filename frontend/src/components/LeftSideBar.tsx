@@ -31,10 +31,10 @@ const LeftSideBar = () => {
                     <div className="mt-4 relative pb-2">
                         <ProfileDropDownMenu />
                         <div className="flex flex-col space-y-1 mt-5">
-                            {navItems.map((item, idx) => {
-                                if (item.position === 'top') {
+                            {navItems.map((item, id) => {
+                                // if (item.position === 'top') {
                                     return (
-                                        <Fragment key={idx}>
+                                        <Fragment key={id}>
                                             <div className="space-y-1">
                                                 <SideNavItem
                                                     label={item.name}
@@ -46,7 +46,7 @@ const LeftSideBar = () => {
                                             </div>
                                         </Fragment>
                                     );
-                                }
+                                // }
                             })}
                         </div>
                     </div>

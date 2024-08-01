@@ -1,5 +1,5 @@
 import { usePathname } from "next/navigation";
-import { Home, Calendar } from 'lucide-react';
+import { Home, Calendar, Search } from 'lucide-react';
 
 export const NavItems = () => {
     const pathname = usePathname();
@@ -11,6 +11,10 @@ export const NavItems = () => {
 
     return [
         {
+            name: 'Search',
+            icon: <Search size={20}/>
+        },
+        {
             name: 'Home',
             href: '/home',
             icon: <Home size={20}/>,
@@ -19,9 +23,9 @@ export const NavItems = () => {
         },
         {
             name: 'Today',
-            href:'/today',
+            href:'/home/today',
             icon: <Calendar size={20}/>,
-            active: isNavItemActive(pathname, '/today')
-        }
+            active: isNavItemActive(pathname, '/home/today')
+        },
     ]
 }
